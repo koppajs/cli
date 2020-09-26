@@ -1,0 +1,32 @@
+<template>
+  <div class="footer">
+    <p>© 2018-{{fullYear}} Koppa.js developed by MightyLopers, Bastian Bensch</p>
+  </div>
+</template>
+
+<script>
+  data: {
+    title: 'Footer'
+  },
+  comp: {
+    fullYear() {
+      let now = new Date();
+      return now.getFullYear();
+    }
+  }
+</script>
+
+<style>
+  footer {
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border-top: 1px solid rgb(220,220,220);
+  }
+</style>
