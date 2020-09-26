@@ -1,0 +1,90 @@
+<template>
+  <div class="topBar shadow" ref="topBar">
+    <div class="left">
+      <button class="open-sideNav btn btn-icon btn-smal" type="button" name="open-sideNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="center" if="title">
+      <img src="[[koppa-logo]]" alt="Koppa Logo" width="44" height="44">
+      {{page-title}}
+    </div>
+
+    <div class="right" ref="right"></div>
+  </div>
+</template>
+
+<script>
+  data: {
+    title: 'TopBar'
+  },
+  async pre() {
+    await that.renderer.digest({
+      url: 'SideNav',
+      ref: document.body,
+      type: 'component'
+    });
+  },
+  merged() {
+    refs.topBar.querySelector('.open-sideNav').addEventListener('click', function(event) {
+      document.querySelector('.sideNav').toggleClass('opened, closed');
+    });
+  }
+</script>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    z-index: 1000;
+  }
+
+  .topBar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    width: inherit;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 0 12px;
+  }
+
+  .topBar > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+
+  .topBar > div.left,
+  .topBar > div.right {
+    min-width: 64px;
+  }
+
+  .topBar .center {
+  	font-size: 24px;
+  	text-align: center;
+  }
+
+  .topBar button.open-sideNav,
+  .topBar button.open-sideNav:active:hover {
+    padding: 4px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+  }
+
+  .topBar .open-sideNav span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: #8c8c8c;
+    margin: 4px 0;
+  }
+</style>

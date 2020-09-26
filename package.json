@@ -1,0 +1,31 @@
+{
+  "name": "@koppa/cli",
+  "version": "1.0.0",
+  "description": "Koppa CLI is the standard and helpful tool for Koppa.js development.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koppajs/cli.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "koppa",
+    "framework",
+    "frontend",
+    "rendering",
+    "cli"
+  ],
+  "author": "MightyLopers, Bastian Bensch",
+  "homepage": "https://github.com/koppajs/cli#readme",
+  "license": "MIT",
+  "bin": {
+    "koppa": "./bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^6.1.0",
+    "fs-extra": "^9.0.1"
+  }
+}

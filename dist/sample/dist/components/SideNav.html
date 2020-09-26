@@ -1,0 +1,173 @@
+<template>
+  <div class="sideNav closed" ref="sideNav">
+    <div class="hiddenCloser close"></div>
+    <nav class="shadow">
+      <ul></ul>
+
+      <ul ref="navList">
+        <li loop="navigation">
+          <a href="{{i.path}}"><span>{{i.name}}</span></a>
+        </li>
+      </ul>
+
+      <ul></ul>
+    </nav>
+  </div>
+</template>
+
+<script>
+  data: {
+    title: 'SideNavigation',
+    navigation: {
+      0: {name: 'Home', path: '/home'}
+    }
+  },
+  merged() {
+    let activeLink = refs.navList.querySelector(`a[href|='${location.pathname}']`);
+    activeLink && activeLink.toggleClass('active');
+  },
+  methods: {
+    toggleSideNav() {
+      refs.sideNav.toggleClass('opened, closed');
+    }
+  },
+  events:[
+    ['.close', 'click', function(event) {
+      this.toggleSideNav();
+    }],
+
+    ['a', 'click', function(event) {
+      event.preventDefault();
+      let target = event.target.closest('a');
+      target.classList.add('active');
+      target.parentElement.siblings(ele => ele.firstElementChild.classList.remove('active'));
+      this.toggleSideNav();
+      navigate(event.target.closest('a').getAttribute('href'));
+    }]
+  ]
+</script>
+
+<style>
+  .sideNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    z-index: 1001;
+  }
+
+  .sideNav.opened {
+    width: 100%;
+  }
+
+  .sideNav.closed {
+    transition: width 0s .3s linear;
+  }
+
+  .sideNav > .hiddenCloser {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: rgba(0,0,0,.2);
+    transition: opacity .2s ease-out;
+  }
+
+  .sideNav.opened > .hiddenCloser {
+    opacity: 1;
+    transition: opacity .3s ease-in;
+  }
+
+  .sideNav > nav {
+    display: flex;
+    flex-flow: column wrap;
+    position: absolute;
+    top: 0;
+    left: -266px;
+    width: 256px;
+    height: 100%;
+    background-color: rgb(255,255,255);
+    transform: translateX(0);
+    transition: transform .2s ease-in
+  }
+
+  .sideNav.opened > nav {
+    transform: translateX(266px);
+    transition: transform .4s ease-out;
+  }
+
+  .sideNav nav ul {
+    padding: 4px 12px;
+  }
+
+  .sideNav nav ul:empty {
+    padding: 0;
+  }
+
+  .sideNav nav ul li {
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .sideNav nav ul li a {
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,255,255,1);
+  }
+
+  .sideNav nav ul li a span {
+    color: rgba(180,180,180,1);
+  }
+
+  .sideNav nav ul li a.active span {
+    color: #1cd67c;
+  }
+
+  .sideNav nav ul:first-of-type {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+  }
+
+  .sideNav nav ul:nth-of-type(2) {
+    display: flex;
+    flex-flow: column wrap;
+    flex-grow: 1;
+    padding: 0;
+    border-top: 1px solid rgba(220,220,220,1);
+  }
+
+  .sideNav nav ul:nth-of-type(2) li {
+    height: 48px;
+    border-bottom: 1px solid rgba(220,220,220,1);
+  }
+
+  .sideNav nav ul:nth-of-type(2) li a {
+    text-decoration: none;
+  }
+
+  .sideNav nav ul:nth-of-type(2) li a:hover {
+    background-color: rgba(240,240,240,1);
+  }
+
+  .sideNav nav ul:nth-of-type(2) li a:hover span {
+    color: #1cd67c;
+  }
+
+  .sideNav nav ul:last-of-type {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    height: 32px;
+  }
+
+  .sideNav nav ul:last-of-type li a:hover span {
+    color: #1cd67c;
+  }
+</style>
